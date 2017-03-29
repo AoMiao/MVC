@@ -3,6 +3,7 @@ package com.vince.mvc.Control;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.vince.mvc.Model.HttpUtil;
 import com.vince.mvc.Model.Utility;
@@ -43,8 +44,26 @@ public class MainActivity extends AppCompatActivity implements WeatherView.Liste
                         weatherView.update(weather);
                     }
                 });
-                //Log.d("me",weather.basic.cityName);
+            }
+        });
+    }
 
+    @Override
+    public void notiflyBack(String address) {
+        HttpUtil.sendOkHttpRequest(address, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+            }
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String imageCode = response.body().string();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.d("me",imageCode);
+                        weatherView.updateBackGround(imageCode);
+                    }
+                });
             }
         });
     }

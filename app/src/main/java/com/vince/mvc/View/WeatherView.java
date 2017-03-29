@@ -36,16 +36,17 @@ public class WeatherView {
     private TextView sport_text;
     private TextView dress_text;
     private ImageView now_png;
+    private ImageView bing_pic_img;
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 
-    public interface Listener{
+    public interface Listener {
         public void notifly(String address);
-        //public void update(Weather weather);
+        public void notiflyBack(String address);
     }
 
 
-    public WeatherView(Activity ac,Listener listener){
+    public WeatherView(Activity ac, Listener listener) {
         context = ac;
         title_city = (TextView) ac.findViewById(R.id.title_city);
         update_time = (TextView) ac.findViewById(R.id.update_time);
@@ -59,13 +60,15 @@ public class WeatherView {
         sport_text = (TextView) ac.findViewById(R.id.sport_text);
         dress_text = (TextView) ac.findViewById(R.id.dress_text);
         now_png = (ImageView) ac.findViewById(R.id.now_png);
+        bing_pic_img = (ImageView) ac.findViewById(R.id.bing_pic_img);
         listener.notifly("https://free-api.heweather.com/v5/weather?city=广州&key=bc0418b57b2d4918819d3974ac1285d9");
+        listener.notiflyBack("http://guolin.tech/api/bing_pic");
 
 
     }
 
 
-    public void update(Weather weather){
+    public void update(Weather weather) {
         title_city.setText(weather.basic.cityName);
         update_time.setText(weather.basic.update.updateTime.split(" ")[1] + "发布");
         tmp_text.setText(weather.now.temperature + "°C");
@@ -103,5 +106,9 @@ public class WeatherView {
             //Log.d("ne",forecast.weatherMessage.png);
             forecast_layout.addView(view);
         }
+    }
+
+    public void updateBackGround(String addrsss) {
+        Glide.with(context).load(addrsss).into(bing_pic_img);
     }
 }
