@@ -19,6 +19,8 @@ import okhttp3.Response;
 
 
 public class MainActivity extends AppCompatActivity implements WeatherView.Listener{
+    //ViewGroup
+
     private Weather weather;
     private WeatherView weatherView;
     @Override
